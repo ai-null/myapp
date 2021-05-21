@@ -11,6 +11,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String defaultTitle = "httpRequest";
   List<ProductModel>? resultBody;
 
+  /// start network request
   void startRequest() async {
     List<ProductModel>? data = await Network.getProduct();
 

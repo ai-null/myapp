@@ -2,20 +2,17 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myapp/model/ProductModel.dart';
+import 'package:myapp/service/ServiceConstant.dart';
 
 class Network {
   static Future<List<ProductModel>> getProduct() async {
-    // Urls
-    const BASE_URL = "https://ranting.twisdev.com/index.php/rest/";
-    const PATH = "items/search/api_key/teampsisthebest/";
-
     // fetch data
     var apiResult = await http
-        .post(Uri.parse(BASE_URL + PATH))
+        .post(Uri.parse(ServiceConstant.BASE_URL + ServiceConstant.PATH))
         .timeout(Duration(seconds: 30));
     var data = json.decode(apiResult.body);
 
-    // map data
+    // map data to list
     return data
         .map<ProductModel>((item) => ProductModel(
             id: item['id'],
