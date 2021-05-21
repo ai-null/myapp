@@ -1,46 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/network/Network.dart';
+import 'package:myapp/ui/screen/screens.dart';
 
-void main() {
-  runApp(MyApp(title: "Http request"));
-}
+void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  final String title;
-  const MyApp({Key? key, required this.title}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String? resultBody;
-
-  void startRequest() async {
-    String? data = await Network.getProduct();
-
-    setState(() {
-      resultBody = data.toString();
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    startRequest();
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: widget.title,
-      home: Scaffold(
-        appBar: AppBar(title: Text(widget.title),),
-        body: Center(
-          child: Text(resultBody != null ? resultBody! : "Loading data.."),
-        ),
-      ),
+      title: "Twiscode Ranting",
+      home: HomeScreen(),
     );
   }
 }
-
