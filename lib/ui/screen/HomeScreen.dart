@@ -28,18 +28,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(defaultTitle),
-      ),
-      body: ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: resultBody != null ? resultBody!.length : 0,
-          itemBuilder: (BuildContext context, int index) {
-            return ListItem(
-              title: "Product ${resultBody![index].title}",
-            );
-          }),
-    );
+        appBar: AppBar(
+          title: Text(defaultTitle),
+        ),
+        body: GridView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(8),
+            shrinkWrap: true,
+            itemCount: resultBody!.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: (itemWidth / itemHeight), crossAxisCount: 2),
+            itemBuilder: (BuildContext context, int index) {
+              return GridItem(
+                productData: resultBody![index],
+              );
+            }));
   }
 }

@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myapp/model/ProductModel.dart';
-import 'package:myapp/service/ServiceConstant.dart';
+import 'package:myapp/util/Constants.dart';
 
 class Network {
   static Future<List<ProductModel>> getProduct() async {
     // fetch data
     var apiResult = await http
-        .post(Uri.parse(ServiceConstant.BASE_URL + ServiceConstant.PATH))
+        .post(Uri.parse(Constants.BASE_URL + Constants.PATH))
         .timeout(Duration(seconds: 30));
     var data = json.decode(apiResult.body);
 
