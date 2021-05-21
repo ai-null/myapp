@@ -26,6 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
     startRequest();
   }
 
+  /// check whether resultBody is null or not pass to the [GridView.count]
+  /// @return [int]
   int isResultNull() {
     return (resultBody != null && resultBody!.isNotEmpty)
         ? resultBody!.length
