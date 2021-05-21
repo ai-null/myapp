@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:myapp/model/ProductModel.dart';
 import 'package:myapp/network/Network.dart';
 
 void main() {
-  runApp(MyApp(title: "Http request"));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final String title;
-  const MyApp({Key? key, required this.title}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  String? resultBody;
+  String defaultTitle = "httpRequest";
+  List<ProductModel>? resultBody;
 
   void startRequest() async {
-    String? data = await Network.getProduct();
+    List<ProductModel>? data = await Network.getProduct();
 
     setState(() {
-      resultBody = data.toString();
+      resultBody = data;
     });
   }
 
@@ -33,14 +35,20 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: widget.title,
+      title: defaultTitle,
       home: Scaffold(
-        appBar: AppBar(title: Text(widget.title),),
-        body: Center(
-          child: Text(resultBody != null ? resultBody! : "Loading data.."),
+        appBar: AppBar(
+          title: Text(defaultTitle),
         ),
+        body: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: resultBody != null ? resultBody!.length : 0,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text("Product ${resultBody![index].title}"),
+              );
+            }),
       ),
     );
   }
 }
-
