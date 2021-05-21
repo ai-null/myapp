@@ -26,6 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
     startRequest();
   }
 
+  int isResultNull() {
+    return (resultBody != null && resultBody!.isNotEmpty)
+        ? resultBody!.length
+        : 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -41,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             physics: NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(8),
             shrinkWrap: true,
-            itemCount: resultBody!.length,
+            itemCount: isResultNull(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: (itemWidth / itemHeight), crossAxisCount: 2),
             itemBuilder: (BuildContext context, int index) {

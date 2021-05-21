@@ -1,13 +1,15 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:myapp/model/ProductModel.dart';
+import 'package:myapp/service/interceptor/HttpLoggingInterceptor.dart';
 import 'package:myapp/util/Constants.dart';
 
 class Network {
   static Future<List<ProductModel>> getProduct() async {
     // fetch data
-    var apiResult = await http
+    var apiResult = await HttpClientWithInterceptor.build(
+            interceptors: [HttpLoggingInterceptor()])
         .post(Uri.parse(Constants.BASE_URL + Constants.PATH))
         .timeout(Duration(seconds: 30));
     var data = json.decode(apiResult.body);
