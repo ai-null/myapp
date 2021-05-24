@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void startRequest() async {
     List<ProductModel>? data = await Network.getProduct();
 
+    // update state
     setState(() {
       resultBody = data;
     });
@@ -38,20 +39,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
+    // measure aspect ratio
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
+    final double aspectRatio = (itemWidth / itemHeight);
 
     return Scaffold(
         appBar: AppBar(
           title: Text(defaultTitle),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {},
+              tooltip: "Shopping cart",
+            )
+          ],
         ),
         body: GridView.builder(
-            physics: NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(8),
             shrinkWrap: true,
             itemCount: isResultNull(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: (itemWidth / itemHeight), crossAxisCount: 2),
+                childAspectRatio: aspectRatio, crossAxisCount: 2),
             itemBuilder: (BuildContext context, int index) {
               return GridItem(
                 productData: resultBody![index],

@@ -25,8 +25,31 @@ class GridItem extends StatelessWidget {
                         fit: BoxFit.cover,
                       )),
           ),
-          ListTile(title: Text(productData.title)),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 16, top: 8),
+            child: Text(
+              productData.title,
+              style: indigoTextFont,
+            ),
+            alignment: Alignment.centerLeft,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 16, top: 2),
+            child: Text(
+              NumberFormat.currency(
+                      locale: "id_ID", decimalDigits: 0, symbol: "Rp.")
+                  .format(productData.price),
+              style: orangeTextFont,
+            ),
+            alignment: Alignment.centerLeft,
+          ),
+          Row(children: <Widget>[
             TextButton(
               child: const Text('ADD TO CHART'),
               onPressed: () {
