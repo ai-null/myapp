@@ -7,8 +7,10 @@ class GridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
+    return Stack(
+      children: [
+        Card(
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
           ClipRRect(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(8), topRight: Radius.circular(8)),
@@ -33,6 +35,8 @@ class GridItem extends StatelessWidget {
             child: Text(
               productData.title,
               style: indigoTextFont,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             alignment: Alignment.centerLeft,
           ),
@@ -49,15 +53,65 @@ class GridItem extends StatelessWidget {
             ),
             alignment: Alignment.centerLeft,
           ),
-          Row(children: <Widget>[
-            TextButton(
-              child: const Text('ADD TO CHART'),
-              onPressed: () {
-                /* ... */
-              },
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8, top: 8),
+            child: Row(
+              children: [
+                Icon(Icons.person_outline),
+                SizedBox(
+                  width: 8,
+                ),
+                Flexible(
+                  child: Container(
+                    child: Text(
+                      productData.merchant,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                )
+              ],
             ),
-            const SizedBox(width: 8),
-          ])
-    ]));
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8, top: 5),
+            child: Row(
+              children: [
+                Icon(Icons.location_on_outlined),
+                SizedBox(
+                  width: 8,
+                ),
+                Flexible(
+                  child: Container(
+                    child: Text(
+                      productData.location,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ])),
+        (productData.isHalal == "1")
+            ? Positioned(
+                right: 15.0,
+                bottom: 30.0,
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset("assets/halal.png"),
+                ),
+              )
+            : Container()
+      ],
+    );
   }
 }
